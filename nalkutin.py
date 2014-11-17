@@ -1,0 +1,54 @@
+#-*-coding:utf-8-*-
+import requests
+import datetime
+import argparse
+from secret import api_token
+
+parser = argparse.ArgumentParser(description='Nag at people who suck at toggling.')
+
+parser.add_argument('--uid', type=str)      # käyttäjän id
+parser.add_argument('--since', type=int)    # tutkittavan ajanjakson alku, päiviä taaksepäin nykyhetkestä
+parser.add_argument('--days', type=int)     # tutkittavan ajanjakson pituus päivinä
+parser.add_argument('--low-warn', type=int, dest='low_warn')
+parser.add_argument('--low-crit', type=int, dest='low_crit')
+parser.add_argument('--hi-warn', type=int, dest='hi_warn')
+parser.add_argument('--hi-crit', type=int, dest='hi_crit')
+
+args = parser.parse_args()
+
+today = datetime.date.today()
+since = today - datetime.timedelta(days=args.since)
+until = since + datetime.timedelta(days=args.days)
+
+payload = {
+  'workspace_id':args.uid,
+  'since':since,
+  'until':until,
+  'user_agent':'api_test'
+}
+
+r = requests.get(
+  'https://toggl.com/reports/api/v2/summary',
+  auth = (api_token,'api_token'),
+  params = payload)
+
+response = r.json()
+
+millisecs = int(response['total_grand'])
+minutes = millisecs / 60000
+
+if (minutes <= args.low_crit):
+    print 'CRITICAL: %d minutes, less than low-crit;' %(minutes)
+    exit(2)
+elif (minutes <= args.low_warn):
+    print 'WARNING: %d minutes, less than low-warn;' %(minutes)
+    exit(1)
+elif (minutes >= args.hi_crit):
+    print 'CRITICAL: %d minutes, more than hi-crit;' %(minutes)
+    exit(2)
+elif (minutes >= args.hi_warn):
+    print 'WARNING: %d minutes, more than hi-warn;' %(minutes)
+    exit(1)
+else:
+    print minutes, 'minutes'
+    exit(0)
