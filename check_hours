@@ -1,7 +1,10 @@
+#!/usr/bin/env python
 #-*-coding:utf-8-*-
 import requests
 import datetime
 import argparse
+# TODO Get api token from https://www.toggl.com/app/profile
+# Save as string in api_token.py
 from secret import api_token
 
 parser = argparse.ArgumentParser(description='Nag at people who suck at toggling.')
