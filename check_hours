@@ -10,7 +10,10 @@ from secret import api_token
 def mintohour(i):
     hours = i // 60
     minutes = i % 60
-    return '%d:%d hours' %(hours, minutes)
+    if minutes != 0:
+        return '%d hours, %d minutes' %(hours, minutes)
+    else:
+        return '%d hours' %(hours)
 
 parser = argparse.ArgumentParser(description='Nag at people who suck at toggling.')
 
