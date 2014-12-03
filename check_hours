@@ -23,7 +23,12 @@ today = datetime.date.today()
 since = today - datetime.timedelta(days=args.since)
 until = since + datetime.timedelta(days=args.days)
 
+# Toggl reports API
+# https://github.com/toggl/toggl_api_docs/blob/master/reports/summary.md
+
 payload = {
+    # TODO tässä menee UserID ja WorkspaceID sekaisin
+    # TODO 'user_ids': args.uid,
   'workspace_id':args.uid,
   'since':since,
   'until':until,
