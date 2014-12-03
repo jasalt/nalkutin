@@ -10,6 +10,7 @@ from secret import api_token
 parser = argparse.ArgumentParser(description='Nag at people who suck at toggling.')
 
 parser.add_argument('--uid', type=str)      # käyttäjän id
+parser.add_argument('--wid', type=str)      # työtilan id
 parser.add_argument('--since', type=int)    # tutkittavan ajanjakson alku, päiviä taaksepäin nykyhetkestä
 parser.add_argument('--days', type=int)     # tutkittavan ajanjakson pituus päivinä
 parser.add_argument('--low-warn', type=int, dest='low_warn')
@@ -27,9 +28,8 @@ until = since + datetime.timedelta(days=args.days)
 # https://github.com/toggl/toggl_api_docs/blob/master/reports/summary.md
 
 payload = {
-    # TODO tässä menee UserID ja WorkspaceID sekaisin
-    # TODO 'user_ids': args.uid,
-  'workspace_id':args.uid,
+  'user_ids': args.uid,
+  'workspace_id':args.wid,
   'since':since,
   'until':until,
   'user_agent':'api_test'
