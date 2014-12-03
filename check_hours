@@ -7,6 +7,11 @@ import argparse
 # Save as string in api_token.py
 from secret import api_token
 
+def mintohour(i):
+    hours = i // 60
+    minutes = i % 60
+    return '%d:%d hours' %(hours, minutes)
+
 parser = argparse.ArgumentParser(description='Nag at people who suck at toggling.')
 
 parser.add_argument('--uid', type=str)      # käyttäjän id
@@ -46,17 +51,17 @@ millisecs = int(response['total_grand'])
 minutes = millisecs / 60000
 
 if (minutes <= args.low_crit):
-    print 'CRITICAL: %d minutes, less than low-crit;' %(minutes)
+    print 'CRITICAL: %s, less than low-crit;' %(mintohour(minutes))
     exit(2)
 elif (minutes <= args.low_warn):
-    print 'WARNING: %d minutes, less than low-warn;' %(minutes)
+    print 'WARNING: %s, less than low-warn;' %(mintohour(minutes))
     exit(1)
 elif (minutes >= args.hi_crit):
-    print 'CRITICAL: %d minutes, more than hi-crit;' %(minutes)
+    print 'CRITICAL: %s, more than hi-crit;' %(mintohour(minutes))
     exit(2)
 elif (minutes >= args.hi_warn):
-    print 'WARNING: %d minutes, more than hi-warn;' %(minutes)
+    print 'WARNING: %s, more than hi-warn;' %(mintohour(minutes))
     exit(1)
 else:
-    print minutes, 'minutes'
+    print 'OK: %s;' %(mintohour(minutes))
     exit(0)
