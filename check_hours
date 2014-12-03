@@ -51,17 +51,17 @@ millisecs = int(response['total_grand'])
 minutes = millisecs / 60000
 
 if (minutes <= args.low_crit):
-    print 'CRITICAL: %s, less than low-crit;' %(mintohour(minutes))
+    print 'CRITICAL - %s, less than low-crit;' %(mintohour(minutes))
     exit(2)
 elif (minutes <= args.low_warn):
-    print 'WARNING: %s, less than low-warn;' %(mintohour(minutes))
+    print 'WARNING - %s, less than low-warn;' %(mintohour(minutes))
     exit(1)
 elif (minutes >= args.hi_crit):
-    print 'CRITICAL: %s, more than hi-crit;' %(mintohour(minutes))
+    print 'CRITICAL - %s, more than hi-crit;' %(mintohour(minutes))
     exit(2)
 elif (minutes >= args.hi_warn):
-    print 'WARNING: %s, more than hi-warn;' %(mintohour(minutes))
+    print 'WARNING - %s, more than hi-warn;' %(mintohour(minutes))
     exit(1)
 else:
-    print 'OK: %s;' %(mintohour(minutes))
+    print 'OK - %s;' %(mintohour(minutes))
     exit(0)
