@@ -17,14 +17,14 @@ def mintohour(i):
 
 parser = argparse.ArgumentParser(description='Nag at people who suck at toggling.')
 
-parser.add_argument('--uid', type=str)      # käyttäjän id
-parser.add_argument('--wid', type=str)      # työtilan id
-parser.add_argument('--since', type=int)    # tutkittavan ajanjakson alku, päiviä taaksepäin nykyhetkestä
-parser.add_argument('--days', type=int)     # tutkittavan ajanjakson pituus päivinä
-parser.add_argument('--low-warn', type=int, dest='low_warn')
-parser.add_argument('--low-crit', type=int, dest='low_crit')
-parser.add_argument('--hi-warn', type=int, dest='hi_warn')
-parser.add_argument('--hi-crit', type=int, dest='hi_crit')
+parser.add_argument('--uid', type=str, required = True)      # käyttäjän id
+parser.add_argument('--wid', type=str, required = True)      # työtilan id
+parser.add_argument('--since', type=int, required = True)    # tutkittavan ajanjakson alku, päiviä taaksepäin nykyhetkestä
+parser.add_argument('--days', type=int, required = True)     # tutkittavan ajanjakson pituus päivinä
+parser.add_argument('--low-warn', type=int, dest='low_warn', required = True)
+parser.add_argument('--low-crit', type=int, dest='low_crit', required = True)
+parser.add_argument('--hi-warn', type=int, dest='hi_warn', required = True)
+parser.add_argument('--hi-crit', type=int, dest='hi_crit', required = True)
 
 args = parser.parse_args()
 
