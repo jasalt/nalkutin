@@ -50,6 +50,10 @@ r = requests.get(
 
 response = r.json()
 
+if not response['total_grand']:
+    print 'CRITICAL - Unable to find any time tracking records;'
+    exit(2)
+
 millisecs = int(response['total_grand'])
 minutes = millisecs / 60000
 
