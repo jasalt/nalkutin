@@ -8,12 +8,17 @@ parser = argparse.ArgumentParser(description='Get userids from Toggl workspace.'
 parser.add_argument('--wid', type=str, required = True)      # työtilan id
 args = parser.parse_args()
 
-r = requests.get(
+req = requests.get(
   'https://www.toggl.com/api/v8/workspaces/%s/workspace_users' %(args.wid),
   auth = (api_token,'api_token')
 )
 
-response = r.json()
+try:
+    response = req.json()
+    for i in response:
+        print i[u'uid'], '|', i[u'name']
 
-for i in response:
-    print i[u'uid'], '|', i[u'name']
+except:
+    print "Problem getting proper response from API."
+    print "HTTP Status: %d - %s " %(req.status_code,
+                                    req.reason)
